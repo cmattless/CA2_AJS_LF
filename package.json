@@ -1,5 +1,5 @@
 {
-  "name": "@rnr/starter-base",
+  "name": "@ca2/loreforge",
   "main": "index.js",
   "version": "1.0.0",
   "scripts": {
@@ -13,9 +13,11 @@
     "postinstall": "npx tailwindcss -i ./global.css -o ./node_modules/.cache/nativewind/global.css"
   },
   "dependencies": {
+    "@radix-ui/react-dropdown-menu": "^2.1.2",
     "@react-native-async-storage/async-storage": "1.23.1",
     "@react-navigation/native": "^7.0.0",
     "@rn-primitives/avatar": "~1.1.0",
+    "@rn-primitives/dropdown-menu": "^1.1.0",
     "@rn-primitives/portal": "~1.1.0",
     "@rn-primitives/progress": "~1.1.0",
     "@rn-primitives/slot": "~1.1.0",

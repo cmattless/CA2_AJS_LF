@@ -1,6 +1,6 @@
 import { createContext, useContext, PropsWithChildren } from "react";
 import { useStorageState } from "@/hooks/useStorageState.ts";
-import { IAuthContext } from "@/types";
+import { IAuthContext } from "@/types/contexts/auth/authcontext";
 
 const AuthContext = createContext<IAuthContext | null>(null);
 export function useSession() {

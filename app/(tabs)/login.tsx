@@ -1,11 +1,13 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { View, Text, Image, Pressable } from "react-native";
 import { useSession } from "@/contexts/AuthContext";
 import { Input } from "@/components/ui/input";
 import axios from "@/config/api.ts";
+import { useRouter } from "expo-router";
 
 const Login = () => {
-	const { signIn } = useSession();
+	const router = useRouter();
+	const { signIn, session } = useSession();
 	const [form, setForm] = React.useState({
 		email: "",
 		password: "",
@@ -22,6 +24,9 @@ const Login = () => {
 			.then((res) => {
 				console.log(res.data);
 				signIn(res.data.token);
+			})
+			.then(() => {
+				router.push("/(tabs)/(auth)/main");
 			})
 			.catch((err) => {
 				setError(err.response.data.error);
