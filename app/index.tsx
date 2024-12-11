@@ -3,7 +3,6 @@ import { useSession } from "@/contexts/AuthContext";
 import { Redirect } from "expo-router";
 
 import { View } from "react-native";
-import { Text } from "@/components/ui/text";
 import Welcome from "@/components/Welcome";
 
 export default function Screen() {
