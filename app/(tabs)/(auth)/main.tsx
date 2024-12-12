@@ -4,15 +4,17 @@ import { CardItem } from "@/components/Menu/CardItem";
 import { Redirect } from "expo-router";
 import { useSession } from "@/contexts/AuthContext";
 import Dropdown from "@/components/Dropdown/Dropdown";
+import { useRouter } from "expo-router";
 
 const Main = () => {
 	const { session } = useSession();
+	const router = useRouter();
 
-	// React.useEffect(() => {
-	// 	if (!session) {
-
-	// 	}
-	// }, [session]);
+	React.useEffect(() => {
+		if (!session) {
+			router.push("/")
+		}
+	}, [session]);
 
 	return (
 		<View className="flex-1 bg-[#333333]">
