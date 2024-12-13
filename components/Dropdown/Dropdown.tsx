@@ -45,7 +45,7 @@ const Dropdown: React.FC<IDropdown> = ({ title }) => {
 		<View>
 			<DropdownMenu>
 				<DropdownMenuTrigger asChild>
-					<Button variant="outline">{title}</Button>
+					<Button variant="ghost">{title}</Button>
 				</DropdownMenuTrigger>
 				<DropdownMenuContent className="w-64 bg-[#333333] native:w-72">
 					<DropdownMenuLabel className="text-destructive-foreground">

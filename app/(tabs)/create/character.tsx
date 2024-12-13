@@ -14,12 +14,12 @@ const Character = () => {
 
 	const [factions, setFactions] = React.useState([]);
 
-	React.useEffect(async () => {
-		await sendRequest({ endpoint: "/factions", method: "GET" }).then((res) => {
+	React.useEffect(() => {
+		sendRequest({ endpoint: "/factions", method: "POST" }).then((res) => {
 			res.map((faction) => {
 				setFactions((prev) => [
 					...prev,
-					{ label: faction.name, value: faction._id },
+					{ name: faction.name, value: faction._id },
 				]);
 			});
 		});
@@ -60,16 +60,14 @@ const Character = () => {
 			: []),
 	];
 
-	const handleFormComplete = async (formData) => {
-		formData["year"] = parseInt(formData["year"]);
-		console.log(`Bearer ${session}`);
+	const handleFormComplete = async (formData: IStepCon) => {
 		await sendRequest({
 			endpoint: "/characters",
 			method: "POST",
 			data: formData,
 			headers: { authorization: `Bearer ${session}` },
 		});
-		showToast("Character created successfully", 3000);
+		showToast("Character created successfully","success", 3000);
 		router.push("/main");
 	};
 

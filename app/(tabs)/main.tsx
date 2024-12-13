@@ -7,7 +7,6 @@ import Dropdown from "@/components/Dropdown/Dropdown";
 import { useRouter, Link } from "expo-router";
 
 const Main = () => {
-	const { session } = useSession();
 	const router = useRouter();
 
 	// React.useEffect(() => {

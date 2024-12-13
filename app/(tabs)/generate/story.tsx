@@ -1,26 +1,13 @@
 import React from "react";
-import { View, Button, Image, Text } from "react-native";
+import { View, Image, Text } from "react-native";
 import StepForm from "@/components/Forms/StepForm";
 import { useRouter } from "expo-router";
 import useRequests from "@/hooks/useRequests";
 import { useSession } from "@/contexts/AuthContext";
 import { useToast } from "@/contexts/ToastContext";
-import { IUserType } from "@/types/contexts/usercontext";
-import { AxiosResponse, ResponseType } from "axios";
+import { IWorldType } from "@/types/models/index";
 
-interface IWorldType {
-	_id: string;
-	name: string;
-	description: string;
-	owner: string;
-	events: string[];
-	year: number;
-	collaborators: string[];
-	magicSystem: string;
-	createdAt: string;
-	updatedAt: string;
-	__v: number;
-}
+
 
 const Story = () => {
 	const router = useRouter();
