@@ -75,7 +75,7 @@ const Main = () => {
 				<CardItem
 					source={require("@/assets/images/browse_worlds.png")}
 					title="Browse Worlds"
-					onPress={() => {}}
+					onPress={() => router.push("/browse/worlds")}
 				/>
 
 				<CardItem

@@ -34,6 +34,8 @@ export default function TabLayout() {
 			/>
 			<Tabs.Screen name="create/world" options={{ href: null }} />
 			<Tabs.Screen name="create/character" options={{ href: null }} />
+			<Tabs.Screen name="create/faction" options={{ href: null }} />
+			<Tabs.Screen name="browse/worlds" options={{ href: null }} />
 		</Tabs>
 	);
 }
