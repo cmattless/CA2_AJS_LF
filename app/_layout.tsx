@@ -7,6 +7,7 @@ import * as React from "react";
 import { NAV_THEME } from "@/lib/constants";
 import { PortalHost } from "@rn-primitives/portal";
 import { SessionProvider } from "@/contexts/AuthContext";
+import { ToastProvider } from "@/contexts/ToastContext";
 
 const DARK_THEME: Theme = {
 	...DarkTheme,
@@ -24,9 +25,11 @@ export default function RootLayout() {
 	return (
 		<SessionProvider>
 			<ThemeProvider value={DARK_THEME}>
-				<StatusBar style={"dark"} />
-				<Stack screenOptions={{ headerShown: false }}></Stack>
-				<PortalHost />
+				<ToastProvider>
+					<StatusBar style={"dark"} />
+					<Stack screenOptions={{ headerShown: false }}></Stack>
+					<PortalHost />
+				</ToastProvider>
 			</ThemeProvider>
 		</SessionProvider>
 	);

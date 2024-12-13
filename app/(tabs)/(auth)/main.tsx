@@ -4,17 +4,18 @@ import { CardItem } from "@/components/Menu/CardItem";
 import { Redirect } from "expo-router";
 import { useSession } from "@/contexts/AuthContext";
 import Dropdown from "@/components/Dropdown/Dropdown";
-import { useRouter } from "expo-router";
+import { useRouter, Link } from "expo-router";
+
 
 const Main = () => {
 	const { session } = useSession();
 	const router = useRouter();
 
-	React.useEffect(() => {
-		if (!session) {
-			router.push("/")
-		}
-	}, [session]);
+	// React.useEffect(() => {
+	// 	if (!session) {
+	// 		router.push("/")
+	// 	}
+	// }, [session]);
 
 	return (
 		<View className="flex-1 bg-[#333333]">
@@ -50,37 +51,49 @@ const Main = () => {
 				className="px-4"
 				contentContainerStyle={{ paddingBottom: 40 }}
 			>
+
+				<Link className="self-center" href="/generate/story">
 				<CardItem
 					source={require("@/assets/images/generate_story.png")}
 					title="Generate Story"
-					onPress={() => {}}
 				/>
-				<CardItem
-					source={require("@/assets/images/create_world.png")}
-					title="Create World"
-					onPress={() => {}}
-				/>
-				<CardItem
-					source={require("@/assets/images/create_character.png")}
-					title="Create Character"
-					onPress={() => {}}
-				/>
-				<CardItem
-					source={require("@/assets/images/create_faction.png")}
-					title="Create Faction"
-					onPress={() => {}}
-				/>
+				</Link>
+				<Link className="self-center" href="/create/world">
+					<CardItem
+						source={require("@/assets/images/create_world_banner.png")}
+						title="Create World"
+						onPress={() => { }}
+					/>
+				</Link>
+				<Link className="self-center" href="/create/world">
+					<CardItem
+						source={require("@/assets/images/create_character.png")}
+						title="Create Character"
+						onPress={() => { }}
+					/>
+				</Link>
+				<Link className="self-center" href="/create/world">
+					<CardItem
+						source={require("@/assets/images/create_faction.png")}
+						title="Create Faction"
+						onPress={() => { }}
+					/>
+				</Link>
 
-				<CardItem
-					source={require("@/assets/images/browse_worlds.png")}
-					title="Browse Worlds"
-					onPress={() => {}}
-				/>
-				<CardItem
-					source={require("@/assets/images/edit_story_resources.png")}
-					title="Edit Story Resources"
-					onPress={() => {}}
-				/>
+				<Link className="self-center" href="/create/world">
+					<CardItem
+						source={require("@/assets/images/browse_worlds.png")}
+						title="Browse Worlds"
+						onPress={() => { }}
+					/>
+				</Link>
+				<Link className="self-center" href="/create/world">
+					<CardItem
+						source={require("@/assets/images/edit_story_resources.png")}
+						title="Edit Story Resources"
+						onPress={() => { }}
+					/>
+				</Link>
 			</ScrollView>
 		</View>
 	);

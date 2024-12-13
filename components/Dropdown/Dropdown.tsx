@@ -18,8 +18,8 @@ import { IDropdown } from "@/types/components/dropdown";
 import { IUserType } from '@/types/contexts/usercontext';
 
 const Dropdown: React.FC<IDropdown> = ({ title }) => {
-	const {session} = useSession()
-	const [user, setUser] = React.useState<IUserType | null>(null);
+	const {session, setUser, user} = useSession()
+
 	const { loading, error, sendRequest } = useRequests();
 
 	React.useEffect(() => {
@@ -31,6 +31,7 @@ const Dropdown: React.FC<IDropdown> = ({ title }) => {
 						authorization: `Bearer ${session}`
 					}
 				});
+				console.log(data);
 				setUser(data);
 			} catch (err) {
 				console.error('Error fetching user:', err);
