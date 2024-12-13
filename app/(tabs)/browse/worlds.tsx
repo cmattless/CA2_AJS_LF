@@ -1,28 +1,34 @@
-import React, { useEffect } from "react";
-import { View, Image, ScrollView } from "react-native";
+import React from "react";
 import { useRouter } from "expo-router";
+import { View, Image, ScrollView } from "react-native";
+
 import { IWorldType } from "@/types/models";
+import useRequests from "@/hooks/useRequests";
+import { useToast } from "@/contexts/ToastContext";
+import { useSession } from "@/contexts/AuthContext";
+
+import { StandardCard } from "@/components/Menu/StandardCard";
+
 const Worlds = () => {
 	const router = useRouter();
+	const showToast = useToast();
+	const { session } = useSession();
+	const { sendRequest } = useRequests();
 
-    const allWorlds : IWorldType[]= sendRequest({
-        endpoint: "/worlds",
-        method: "GET",
-        headers: { authorization: `Bearer ${session}` },
-    }).then((res) => {
-        if (res.error) {
-            return showToast(res.error, "destructive", 3000);
-        }
-    });
+	const [allWorlds, setAllWorlds] = React.useState<IWorldType[]>([]);
 
-
-    
-
-	// React.useEffect(() => {
-	// 	if (!session) {
-	// 		router.push("/")
-	// 	}
-	// }, [session]);
+	React.useEffect(() => {
+		sendRequest({
+			endpoint: "/worlds",
+			method: "GET",
+			headers: { authorization: `Bearer ${session}` },
+		}).then((res) => {
+			if (res.error) {
+				return showToast(res.error, "destructive", 3000);
+			}
+			setAllWorlds(res);
+		});
+	}, []);
 
 	return (
 		<View className="flex-1 bg-[#333333]">
@@ -38,6 +44,13 @@ const Worlds = () => {
 				className="px-4"
 				contentContainerStyle={{ paddingBottom: 40 }}
 			>
+				{allWorlds?.map((world) => (
+					<StandardCard
+						key={world._id}
+						title={world.name}
+						onPress={() => router.push(`/viewer?_id=${world._id}&type=worlds`)}
+					/>
+				))}
 			</ScrollView>
 		</View>
 	);

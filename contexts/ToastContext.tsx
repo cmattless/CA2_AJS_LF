@@ -5,9 +5,8 @@ import React, {
 	useCallback,
 	ReactNode,
 } from "react";
-import { Text, Animated } from "react-native";
+import { Text, Animated, StyleSheet, View } from "react-native";
 
-// Define ToastType as a string union
 type ToastType = "success" | "destructive" | "default";
 
 interface ToastContextType {
@@ -20,7 +19,18 @@ interface ToastProviderProps {
 	children: ReactNode;
 }
 
-// Toast Provider component
+const getToastBackgroundColor = (type: ToastType): string => {
+	switch (type) {
+		case "success":
+			return "#10B981"; // green-500
+		case "destructive":
+			return "#EF4444"; // red-500
+		case "default":
+		default:
+			return "#1F2937"; // gray-800
+	}
+};
+
 export const ToastProvider: React.FC<ToastProviderProps> = ({ children }) => {
 	const [toast, setToast] = useState<{
 		message: string;
@@ -48,31 +58,17 @@ export const ToastProvider: React.FC<ToastProviderProps> = ({ children }) => {
 		[opacity]
 	);
 
-	const getToastClassName = (type: ToastType) => {
-		switch (type) {
-			case "success":
-				return "bg-green-500";
-			case "destructive":
-				return "bg-red-500";
-			case "default":
-			default:
-				return "bg-gray-800";
-		}
-	};
-
 	return (
 		<ToastContext.Provider value={{ showToast }}>
 			{children}
 			{toast && (
 				<Animated.View
-					style={{ opacity }}
-					className={`absolute bottom-12  left-5 right-5 px-4 py-2 rounded-lg ${getToastClassName(
-						toast.type
-					)} bg-black`}
+					style={[
+						styles.toastContainer,
+						{ opacity, backgroundColor: getToastBackgroundColor(toast.type) },
+					]}
 				>
-					<Text className="text-white text-base text-center">
-						{toast.message}
-					</Text>
+					<Text style={styles.toastText}>{toast.message}</Text>
 				</Animated.View>
 			)}
 		</ToastContext.Provider>
@@ -90,3 +86,21 @@ export const useToast = (): ((
 	}
 	return context.showToast;
 };
+
+const styles = StyleSheet.create({
+	toastContainer: {
+		position: "absolute",
+		bottom: 48,
+		left: 20,
+		right: 20,
+		paddingHorizontal: 16,
+		paddingVertical: 8,
+		borderRadius: 8,
+		alignItems: "center",
+	},
+	toastText: {
+		color: "#FFFFFF",
+		fontSize: 16,
+		textAlign: "center",
+	},
+});

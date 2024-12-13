@@ -6,13 +6,13 @@ import {
 	Image,
 } from "react-native";
 
-interface CardItemProps {
+interface ICardItemProps {
 	source: ImageSourcePropType;
 	title: string;
 	onPress?: () => void;
 }
 
-export const CardItem: React.FC<CardItemProps> = ({
+export const CardItem: React.FC<ICardItemProps> = ({
 	source,
 	title,
 	onPress,
