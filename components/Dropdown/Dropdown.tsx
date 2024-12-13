@@ -49,7 +49,7 @@ const Dropdown: React.FC<IDropdown> = ({ title }) => {
 				</DropdownMenuTrigger>
 				<DropdownMenuContent className="w-64 bg-[#333333] native:w-72">
 					<DropdownMenuLabel className="text-destructive-foreground">
-						{user ? user.username : (<Skeleton className='h-3 w-1/2'/>)}
+						{user?.username}
 					</DropdownMenuLabel>
 					<DropdownMenuSeparator />
 					<DropdownMenuItem className="bg-destructive">
