@@ -1,8 +1,9 @@
-import { createContext, useContext, PropsWithChildren } from "react";
+import { createContext, useContext, PropsWithChildren, useState } from "react";
 import { useStorageState } from "@/hooks/useStorageState.ts";
 import { IAuthContext } from "@/types/contexts/auth/authcontext";
 
 const AuthContext = createContext<IAuthContext | null>(null);
+
 export function useSession() {
 	const value = useContext(AuthContext);
 
@@ -17,6 +18,16 @@ export function useSession() {
 
 export function SessionProvider(props: PropsWithChildren) {
 	const [[isLoading, session], setSession] = useStorageState("session");
+	const [user, setUser] = useState("reset");
+
+	// useEffect(() => {
+	// 	if (session) {
+	// 		getUser(session).then((data) => {
+	// 			setSession(session);
+	// 		});
+	// 	}
+
+	// }, [session, setSession]);
 
 	return (
 		<AuthContext.Provider
@@ -24,10 +35,10 @@ export function SessionProvider(props: PropsWithChildren) {
 				signIn: (token: string) => {
 					setSession(token);
 				},
-				signOut: () => {
-					setSession(null);
-				},
+				signOut: () => {},
 				session,
+				user,
+				setUser,
 				isLoading,
 			}}
 		>

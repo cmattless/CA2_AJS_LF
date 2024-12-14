@@ -4,13 +4,15 @@ import { CardItem } from "@/components/Menu/CardItem";
 import { Redirect } from "expo-router";
 import { useSession } from "@/contexts/AuthContext";
 import Dropdown from "@/components/Dropdown/Dropdown";
+import { useRouter, Link } from "expo-router";
 
 const Main = () => {
 	const { session } = useSession();
+	const router = useRouter();
 
 	// React.useEffect(() => {
 	// 	if (!session) {
-
+	// 		router.push("/")
 	// 	}
 	// }, [session]);
 
@@ -49,24 +51,26 @@ const Main = () => {
 				contentContainerStyle={{ paddingBottom: 40 }}
 			>
 				<CardItem
+					onPress={() => router.push("/generate/story")}
 					source={require("@/assets/images/generate_story.png")}
 					title="Generate Story"
-					onPress={() => {}}
 				/>
+
 				<CardItem
-					source={require("@/assets/images/create_world.png")}
+					source={require("@/assets/images/create_world_banner.png")}
 					title="Create World"
-					onPress={() => {}}
+					onPress={() => router.push("/create/world")}
 				/>
+
 				<CardItem
 					source={require("@/assets/images/create_character.png")}
 					title="Create Character"
-					onPress={() => {}}
+					onPress={() => router.push("/create/character")}
 				/>
 				<CardItem
 					source={require("@/assets/images/create_faction.png")}
 					title="Create Faction"
-					onPress={() => {}}
+					onPress={() => router.push("/create/faction")}
 				/>
 
 				<CardItem
@@ -74,6 +78,7 @@ const Main = () => {
 					title="Browse Worlds"
 					onPress={() => {}}
 				/>
+
 				<CardItem
 					source={require("@/assets/images/edit_story_resources.png")}
 					title="Edit Story Resources"

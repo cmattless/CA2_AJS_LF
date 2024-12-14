@@ -26,7 +26,7 @@ const Login = () => {
 				signIn(res.data.token);
 			})
 			.then(() => {
-				router.push("/(tabs)/(auth)/main");
+				router.push("/(tabs)/main");
 			})
 			.catch((err) => {
 				setError(err.response.data.error);
