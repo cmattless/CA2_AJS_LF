@@ -5,10 +5,11 @@ import { useRouter } from "expo-router";
 import useRequests from "@/hooks/useRequests";
 import { useSession } from "@/contexts/AuthContext";
 import { useToast } from "@/contexts/ToastContext";
+import { IFactionType } from "@/types/models";
 
-const World = () => {
+const Faction = () => {
 	const router = useRouter();
-	const { session } = useSession();
+	const { session, user } = useSession();
 	const { loading, error, sendRequest } = useRequests();
 	const showToast = useToast();
 
@@ -16,36 +17,43 @@ const World = () => {
 		{
 			type: "text",
 			name: "name",
-			label: "World Name",
-			placeholder: "Enter world name",
+			label: "Faction Name",
+			placeholder: "Enter faction name",
 			required: true,
+		},
+		{
+			type: "dropdown",
+			name: "type",
+			label: "Faction Type",
+			required: true,
+			options: [
+				{ name: "Kingdom", value: "Kingdom" },
+				{ name: "Guild", value: "Guild" },
+				{ name: "Tribe", value: "Tribe" },
+				{ name: "Order", value: "Order" },
+			],
 		},
 		{
 			type: "textarea",
 			name: "description",
-			label: "World Description",
-			placeholder: "Describe your world",
+			label: "Faction Description",
 			required: true,
-		},
-		{
-			type: "text",
-			name: "year",
-			label: "World Year",
-			placeholder: "Enter world year",
-			required: true,
+			placeholder: "Describe your faction",
 		},
 	];
 
-	const handleFormComplete = async (formData) => {
-		formData["year"] = parseInt(formData["year"]);
-		console.log(`Bearer ${session}`);
+	const handleFormComplete = async (formData: Record<string, any>) => {
 		await sendRequest({
-			endpoint: "/worlds",
+			endpoint: "/factions",
 			method: "POST",
 			data: formData,
 			headers: { authorization: `Bearer ${session}` },
+		}).then((res) => {
+			if (res.error) {
+				return showToast(res.error, "destructive", 3000);
+			}
 		});
-		showToast("World created successfully", "success", 3000);
+		showToast("Character created successfully", "success", 3000);
 		router.push("/main");
 	};
 
@@ -63,7 +71,7 @@ const World = () => {
 					style={{ width: 80, height: 122 }}
 				/>
 				<Text className="text-white text-xl font-bold mb-4">
-					Create a World
+					Create a Faction
 				</Text>
 			</View>
 			<View className="flex-1 items-center">
@@ -73,4 +81,4 @@ const World = () => {
 	);
 };
 
-export default World;
+export default Faction;

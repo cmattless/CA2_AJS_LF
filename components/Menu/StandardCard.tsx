@@ -1,26 +1,22 @@
 import {
-	ImageSourcePropType,
 	Pressable,
 	View,
 	Text,
 	Image,
 } from "react-native";
 
-interface ICardItemProps {
-	source: ImageSourcePropType;
+interface IStandardCardProps {
 	title: string;
 	onPress?: () => void;
 }
 
-export const CardItem: React.FC<ICardItemProps> = ({
-	source,
+export const StandardCard: React.FC<IStandardCardProps> = ({
 	title,
 	onPress,
 }) => {
 	return (
 		<Pressable onPress={onPress} className="mb-4">
 			<View className="rounded-md overflow-hidden">
-				<Image className="w-full h-32" source={source} resizeMode="stretch" />
 				<View className="absolute inset-0 bg-black/40 justify-center items-center">
 					<Text className="text-white text-lg font-semibold">{title}</Text>
 				</View>

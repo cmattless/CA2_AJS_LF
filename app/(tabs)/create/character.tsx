@@ -6,46 +6,68 @@ import useRequests from "@/hooks/useRequests";
 import { useSession } from "@/contexts/AuthContext";
 import { useToast } from "@/contexts/ToastContext";
 
-const World = () => {
+const Character = () => {
 	const router = useRouter();
-	const { session } = useSession();
+	const { session, user } = useSession();
 	const { loading, error, sendRequest } = useRequests();
 	const showToast = useToast();
+
+	const [factions, setFactions] = React.useState([]);
+
+	React.useEffect(() => {
+		sendRequest({ endpoint: "/factions", method: "POST" }).then((res) => {
+			res.map((faction) => {
+				setFactions((prev) => [
+					...prev,
+					{ name: faction.name, value: faction._id },
+				]);
+			});
+		});
+	}, [user]);
 
 	const stepsConfig = [
 		{
 			type: "text",
 			name: "name",
-			label: "World Name",
-			placeholder: "Enter world name",
+			label: "Character Name",
+			placeholder: "Enter character name",
 			required: true,
 		},
 		{
 			type: "textarea",
 			name: "description",
-			label: "World Description",
-			placeholder: "Describe your world",
+			label: "Character Description",
+			placeholder: "Describe your character",
 			required: true,
 		},
 		{
 			type: "text",
-			name: "year",
-			label: "World Year",
-			placeholder: "Enter world year",
+			name: "profession",
+			label: "Character Profession",
+			placeholder: "Enter character profession",
 			required: true,
 		},
+		...(factions.length > 0
+			? [
+					{
+						type: "dropdown",
+						name: "faction",
+						label: "Character Faction",
+						required: true,
+						options: factions,
+					},
+			  ]
+			: []),
 	];
 
-	const handleFormComplete = async (formData) => {
-		formData["year"] = parseInt(formData["year"]);
-		console.log(`Bearer ${session}`);
+	const handleFormComplete = async (formData: IStepCon) => {
 		await sendRequest({
-			endpoint: "/worlds",
+			endpoint: "/characters",
 			method: "POST",
 			data: formData,
 			headers: { authorization: `Bearer ${session}` },
 		});
-		showToast("World created successfully", "success", 3000);
+		showToast("Character created successfully","success", 3000);
 		router.push("/main");
 	};
 
@@ -63,7 +85,7 @@ const World = () => {
 					style={{ width: 80, height: 122 }}
 				/>
 				<Text className="text-white text-xl font-bold mb-4">
-					Create a World
+					Create a Character
 				</Text>
 			</View>
 			<View className="flex-1 items-center">
@@ -73,4 +95,4 @@ const World = () => {
 	);
 };
 
-export default World;
+export default Character;

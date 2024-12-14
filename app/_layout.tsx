@@ -26,8 +26,7 @@ export default function RootLayout() {
 		<SessionProvider>
 			<ThemeProvider value={DARK_THEME}>
 				<ToastProvider>
-					
-					<Stack screenOptions={{ headerShown: false }}></Stack>
+					<Stack></Stack>
 					<PortalHost />
 				</ToastProvider>
 			</ThemeProvider>

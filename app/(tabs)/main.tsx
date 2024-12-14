@@ -7,7 +7,6 @@ import Dropdown from "@/components/Dropdown/Dropdown";
 import { useRouter, Link } from "expo-router";
 
 const Main = () => {
-	const { session } = useSession();
 	const router = useRouter();
 
 	// React.useEffect(() => {
@@ -76,7 +75,7 @@ const Main = () => {
 				<CardItem
 					source={require("@/assets/images/browse_worlds.png")}
 					title="Browse Worlds"
-					onPress={() => {}}
+					onPress={() => router.push("/browse/worlds")}
 				/>
 
 				<CardItem
