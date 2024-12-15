@@ -22,12 +22,12 @@ interface ToastProviderProps {
 const getToastBackgroundColor = (type: ToastType): string => {
 	switch (type) {
 		case "success":
-			return "#10B981"; // green-500
+			return "#10B981"; 
 		case "destructive":
-			return "#EF4444"; // red-500
+			return "#EF4444";
 		case "default":
 		default:
-			return "#1F2937"; // gray-800
+			return "#1F2937"; 
 	}
 };
 

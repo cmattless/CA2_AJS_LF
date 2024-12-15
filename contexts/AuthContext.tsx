@@ -1,6 +1,8 @@
-import { createContext, useContext, PropsWithChildren, useState } from "react";
+import { createContext, useContext, PropsWithChildren, useState, useEffect } from "react";
 import { useStorageState } from "@/hooks/useStorageState.ts";
+import useRequests from "@/hooks/useRequests";
 import { IAuthContext } from "@/types/contexts/auth/authcontext";
+import { IUserType } from "@/types/models";
 
 const AuthContext = createContext<IAuthContext | null>(null);
 
@@ -18,16 +20,44 @@ export function useSession() {
 
 export function SessionProvider(props: PropsWithChildren) {
 	const [[isLoading, session], setSession] = useStorageState("session");
-	const [user, setUser] = useState("reset");
+	const { sendRequest } = useRequests();
+	const [user, setUser] = useState<IUserType | undefined>(undefined);
 
-	// useEffect(() => {
-	// 	if (session) {
-	// 		getUser(session).then((data) => {
-	// 			setSession(session);
-	// 		});
-	// 	}
 
-	// }, [session, setSession]);
+	useEffect(() => {
+		if (session) {
+			const fetchUser = async () => {
+						try {
+							const data: IUserType = await sendRequest({
+								endpoint: "/users/me",
+								headers: {
+									authorization: `Bearer ${session}`,
+								},
+							});
+							setUser(data);
+						} catch (err) {
+							console.error("Error fetching user:", err);
+						}
+					};
+			
+					fetchUser();
+		}
+	}	, [session]);
+
+
+	function isValidJwt(session: { jwt: string }): boolean {
+		try {
+			const payload = JSON.parse(atob(session.jwt.split(".")[1]));
+			if ( !(payload.exp * 1000 > Date.now())){
+				setSession(null);
+				localStorage.removeItem("session");
+				return false;
+			}
+			return true;
+		} catch (e) {
+			return false;
+		}
+	}
 
 	return (
 		<AuthContext.Provider
@@ -36,6 +66,7 @@ export function SessionProvider(props: PropsWithChildren) {
 					setSession(token);
 				},
 				signOut: () => {},
+				isValidJwt,
 				session,
 				user,
 				setUser,
