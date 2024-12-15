@@ -38,7 +38,6 @@ const World = () => {
 
 	const handleFormComplete = async (formData) => {
 		formData["year"] = parseInt(formData["year"]);
-		console.log(`Bearer ${session}`);
 		await sendRequest({
 			endpoint: "/worlds",
 			method: "POST",

@@ -22,11 +22,13 @@ const Worlds = () => {
 			endpoint: "/worlds",
 			method: "GET",
 			headers: { authorization: `Bearer ${session}` },
-		}).then((res) => {
-			if (res.error) {
-				return showToast(res.error, "destructive", 3000);
+		}).then((res: unknown) => {
+			const data = res as IWorldType[];
+			if (Array.isArray(data)) {
+				setAllWorlds(data);
+			} else {
+				showToast("Failed to fetch worlds", "destructive", 3000);
 			}
-			setAllWorlds(res);
 		});
 	}, []);
 
@@ -48,9 +50,15 @@ const Worlds = () => {
 					<StandardCard
 						key={world._id}
 						title={world.name}
-						onPress={() => router.push(`/viewer?_id=${world._id}&type=worlds`)}
+						text={world.description}
+						onPress={() => router.push(`/viewer/worlds/${world._id}`)}
 					/>
 				))}
+
+				<StandardCard
+					key={123}
+					title={"Test"}
+				/>
 			</ScrollView>
 		</View>
 	);

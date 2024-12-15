@@ -2,9 +2,9 @@ import React, { useState } from "react";
 import { View, Button, Image, Text } from "react-native";
 import StepForm from "@/components/Forms/StepForm";
 import { useRouter } from "expo-router";
-import useRequests from "@/hooks/useRequests";
 import { useSession } from "@/contexts/AuthContext";
 import { useToast } from "@/contexts/ToastContext";
+import useRequests from "@/hooks/useRequests";
 
 const Character = () => {
 	const router = useRouter();

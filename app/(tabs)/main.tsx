@@ -5,9 +5,11 @@ import { Redirect } from "expo-router";
 import { useSession } from "@/contexts/AuthContext";
 import Dropdown from "@/components/Dropdown/Dropdown";
 import { useRouter, Link } from "expo-router";
+import { Skeleton } from "@/components/ui/skeleton";
 
 const Main = () => {
 	const router = useRouter();
+	const { user } = useSession();
 
 	// React.useEffect(() => {
 	// 	if (!session) {
@@ -17,32 +19,14 @@ const Main = () => {
 
 	return (
 		<View className="flex-1 bg-[#333333]">
-			<View className="flex-row justify-between items-center p-4">
+			<View className="flex-row justify-between items-center">
 				<Image
 					style={{ width: 80, height: 122 }}
 					source={require("@/assets/images/LF_Trans.png")}
 					resizeMode="contain"
 				/>
-				<Pressable className="h-10 w-10 rounded-full bg-white/20 justify-center items-center">
-					<Dropdown
-						title={
-							<svg
-								xmlns="http://www.w3.org/2000/svg"
-								fill="none"
-								viewBox="0 0 24 24"
-								strokeWidth={1.5}
-								stroke="currentColor"
-								className="size-6"
-							>
-								<path
-									strokeLinecap="round"
-									strokeLinejoin="round"
-									d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.501 20.118a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632Z"
-								/>
-							</svg>
-						}
-					/>
-				</Pressable>
+				
+			<Dropdown title={user?.username || <Skeleton className={'w-20 h-4'}/> } />
 			</View>
 
 			<ScrollView
