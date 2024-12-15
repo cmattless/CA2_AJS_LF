@@ -8,6 +8,7 @@ import { NAV_THEME } from "@/lib/constants";
 import { PortalHost } from "@rn-primitives/portal";
 import { SessionProvider } from "@/contexts/AuthContext";
 import { ToastProvider } from "@/contexts/ToastContext";
+import { StoryProvider } from "@/contexts/StoryContext";
 
 const DARK_THEME: Theme = {
 	...DarkTheme,
@@ -23,13 +24,15 @@ SplashScreen.preventAutoHideAsync();
 
 export default function RootLayout() {
 	return (
-		<SessionProvider>
-			<ThemeProvider value={DARK_THEME}>
-				<ToastProvider>
-					<Stack></Stack>
-					<PortalHost />
-				</ToastProvider>
-			</ThemeProvider>
-		</SessionProvider>
+		<ToastProvider>
+			<SessionProvider>
+				<ThemeProvider value={DARK_THEME}>
+					<StoryProvider>
+						<Stack screenOptions={{ headerShown: false }}></Stack>
+						<PortalHost />
+					</StoryProvider>
+				</ThemeProvider>
+			</SessionProvider>
+		</ToastProvider>
 	);
 }

@@ -1,7 +1,20 @@
 import FontAwesome from "@expo/vector-icons/FontAwesome";
-import { Tabs } from "expo-router";
+import { Tabs,  } from "expo-router";
+import React from "react";
+import { useRouter, useRootNavigationState } from "expo-router";
+import { useSession } from "@/contexts/AuthContext";
 
 export default function TabLayout() {
+	const { session, isValidJwt } = useSession();
+	const router = useRouter();
+	const rNS = useRootNavigationState();
+
+	React.useEffect(() => {
+		if (!rNS.key) return
+		if (!session || !isValidJwt({ jwt: session })) {
+			router.replace("/");
+		}
+	}, [session, isValidJwt, router]);
 	return (
 		<Tabs
 			screenOptions={{
@@ -23,6 +36,7 @@ export default function TabLayout() {
 					),
 				}}
 			/>
+
 			<Tabs.Screen
 				name="generate/story"
 				options={{
@@ -32,11 +46,17 @@ export default function TabLayout() {
 					),
 				}}
 			/>
+			<Tabs.Screen name="generate/display" options={{ href: null }} />
 			<Tabs.Screen name="create/world" options={{ href: null }} />
 			<Tabs.Screen name="create/character" options={{ href: null }} />
 			<Tabs.Screen name="create/faction" options={{ href: null }} />
 			<Tabs.Screen name="browse/worlds" options={{ href: null }} />
-			<Tabs.Screen name="viewer" options={{ href: null }} />
+			<Tabs.Screen name="viewer/[type]/[id]" options={{ href: null }} />
+			<Tabs.Screen name="viewer/[type]/edit/[id]" options={{ href: null }} />
+			
+
 		</Tabs>
 	);
 }
+
+
