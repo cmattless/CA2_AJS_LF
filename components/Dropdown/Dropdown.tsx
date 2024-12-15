@@ -15,7 +15,7 @@ import {
 import { Skeleton } from "@/components/ui/skeleton";
 
 import { IDropdown } from "@/types/components/dropdown";
-import { IUserType } from "@/types/contexts/usercontext";
+import { IUserType } from "@/types/models";
 
 const Dropdown: React.FC<IDropdown> = ({ title }) => {
 	const { session, setUser, user } = useSession();
@@ -31,7 +31,6 @@ const Dropdown: React.FC<IDropdown> = ({ title }) => {
 						authorization: `Bearer ${session}`,
 					},
 				});
-				console.log(data);
 				setUser(data);
 			} catch (err) {
 				console.error("Error fetching user:", err);
@@ -45,7 +44,7 @@ const Dropdown: React.FC<IDropdown> = ({ title }) => {
 		<View>
 			<DropdownMenu>
 				<DropdownMenuTrigger asChild>
-					<Button variant="ghost">{title}</Button>
+					<Button className="text-white font-bold" variant="ghost">{title}</Button>
 				</DropdownMenuTrigger>
 				<DropdownMenuContent className="w-64 bg-[#333333] native:w-72">
 					<DropdownMenuLabel className="text-destructive-foreground">
