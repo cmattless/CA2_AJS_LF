@@ -4,25 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Text } from "@/components/ui/text";
 import { Textarea } from "@/components/ui/textarea";
 import { Input } from "@/components/ui/input";
-
-interface IOptions {
-	_id: string;
-	name: string;
-}
-
-type Step = {
-	type: "text" | "textarea" | "toggle" | "dropdown";
-	name: string;
-	label: string;
-	placeholder?: string;
-	required?: boolean;
-	options?: IOptions[];
-};
-
-type StepFormProps = {
-	steps: Step[];
-	onComplete: (formData: Record<string, any>) => void;
-};
+import { StepFormProps } from "@/types/components/Forms";
 
 const StepForm: React.FC<StepFormProps> = ({ steps, onComplete }) => {
 	const [currentStep, setCurrentStep] = useState(0);
@@ -104,7 +86,7 @@ const StepForm: React.FC<StepFormProps> = ({ steps, onComplete }) => {
 						<Picker
 							selectedValue={formData[currentStepConfig.name] || "default"}
 							style={styles.input}
-							onValueChange={(itemValue) => handleChange(itemValue)}
+							onValueChange={(itemValue: string) => handleChange(itemValue)}
 						>
 							<Picker.Item
 								label={currentStepConfig.placeholder || "Select an option"}
@@ -153,12 +135,13 @@ const StepForm: React.FC<StepFormProps> = ({ steps, onComplete }) => {
 				)}
 
 				<Button
+					disabled={currentStepConfig.loading}
 					className="flex-1"
 					variant={"default"}
 					size={"lg"}
 					onPress={handleNext}
 				>
-					<Text className="text-center font-bold text-white">
+					<Text  className="text-center font-bold text-white">
 						{currentStep === steps.length - 1 ? "Finish" : "Next"}
 					</Text>
 				</Button>
