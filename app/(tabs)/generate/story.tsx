@@ -6,22 +6,22 @@ import useRequests from "@/hooks/useRequests";
 import { useSession } from "@/contexts/AuthContext";
 import { useToast } from "@/contexts/ToastContext";
 import { IWorldType } from "@/types/models/index";
+import { useStory } from "@/contexts/StoryContext";
 
 
 
 const Story = () => {
 	const router = useRouter();
 	const { session, user } = useSession();
+	const { setStory } = useStory();
 	const { sendRequest } = useRequests();
 	const showToast = useToast();
+	const [loading, setLoading] = React.useState(false);
 
 	const [worlds, setWorlds] = React.useState<IWorldType[]>([]);
 
 	const getUserWorlds = async () => {
-		console.log("session", session);
-		console.log("user", user);
 		if (!user) return;
-		console.log("user", user);
 		const res: IWorldType[] = await sendRequest({
 			endpoint: `/worlds/owner/${user?._id}`,
 			method: "GET",
@@ -33,19 +33,27 @@ const Story = () => {
 		setWorlds(worlds);
 	};
 
-	const handleFormComplete = async (formData) => {
-		console.log(formData);
-		let story = await sendRequest({
+	interface IStoryForm {
+		world: string;
+	}
+
+	const handleFormComplete = (formData: Record<string, any>) => {
+		setLoading(true);
+		sendRequest({
 			endpoint: `/generate/${formData.world}`,
 			data: formData,
 			headers: { authorization: `Bearer ${session}` },
+		}).then((res) => {
+			setStory(res as string);
+		}).then(() => {
+			router.push("/(tabs)/generate/display");
 		});
-		console.log(story);
+		setLoading(false);
 	};
 
 	React.useEffect(() => {
 		getUserWorlds();
-	}, [user]);
+	}, [user,]);
 
 	const stepsConfig = [
 		{
@@ -60,7 +68,6 @@ const Story = () => {
 
 	return (
 		<View className="flex-1 bg-[#333333]">
-			
 			<View className="flex-1 justify-center items-center">
 				<Image
 					style={{ width: "100%", height: "55%" }}
@@ -77,8 +84,8 @@ const Story = () => {
 				</Text>
 			</View>
 
-			<View className="flex-1 items-center">
-				<StepForm steps={stepsConfig} onComplete={handleFormComplete} />
+			<View className="flex-1 min-w-1/2 items-center">
+				<StepForm loading={loading} steps={stepsConfig} onComplete={handleFormComplete} />
 			</View>
 		</View>
 	);
