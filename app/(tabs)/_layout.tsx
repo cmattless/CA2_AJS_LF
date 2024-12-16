@@ -14,6 +14,7 @@ export default function TabLayout() {
 		if (!session || !isValidJwt({ jwt: session })) {
 			router.replace("/");
 		}
+		console.log("valid jwt");
 	}, [session, isValidJwt, router]);
 	return (
 		<Tabs
@@ -51,6 +52,7 @@ export default function TabLayout() {
 			<Tabs.Screen name="create/character" options={{ href: null }} />
 			<Tabs.Screen name="create/faction" options={{ href: null }} />
 			<Tabs.Screen name="browse/worlds" options={{ href: null }} />
+			<Tabs.Screen name="browse/resources" options={{ href: null }} />
 			<Tabs.Screen name="viewer/[type]/[id]" options={{ href: null }} />
 			<Tabs.Screen name="viewer/[type]/edit/[id]" options={{ href: null }} />
 			

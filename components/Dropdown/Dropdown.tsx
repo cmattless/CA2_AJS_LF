@@ -18,7 +18,7 @@ import { IDropdown } from "@/types/components/dropdown";
 import { IUserType } from "@/types/models";
 
 const Dropdown: React.FC<IDropdown> = ({ title }) => {
-	const { session, setUser, user } = useSession();
+	const { session, setUser, user, signOut } = useSession();
 
 	const { loading, error, sendRequest } = useRequests();
 
@@ -55,7 +55,7 @@ const Dropdown: React.FC<IDropdown> = ({ title }) => {
 						)}
 					</DropdownMenuLabel>
 					<DropdownMenuSeparator />
-					<DropdownMenuItem className="bg-destructive">
+					<DropdownMenuItem onPress={() => {signOut()}} className="bg-destructive">
 						<Text className="text-destructive-foreground">Log out</Text>
 					</DropdownMenuItem>
 				</DropdownMenuContent>

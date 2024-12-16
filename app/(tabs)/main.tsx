@@ -35,7 +35,7 @@ const Main = () => {
 			>
 				<CardItem
 					onPress={() => router.push("/generate/story")}
-					source={require("@/assets/images/generate_story.png")}
+					source={require("@/assets/images/generate_story_banner.png")}
 					title="Generate Story"
 				/>
 
@@ -46,12 +46,12 @@ const Main = () => {
 				/>
 
 				<CardItem
-					source={require("@/assets/images/create_character.png")}
+					source={require("@/assets/images/create_character_banner.png")}
 					title="Create Character"
 					onPress={() => router.push("/create/character")}
 				/>
 				<CardItem
-					source={require("@/assets/images/create_faction.png")}
+					source={require("@/assets/images/create_faction_banner.png")}
 					title="Create Faction"
 					onPress={() => router.push("/create/faction")}
 				/>
@@ -65,7 +65,7 @@ const Main = () => {
 				<CardItem
 					source={require("@/assets/images/edit_story_resources.png")}
 					title="Edit Story Resources"
-					onPress={() => {}}
+					onPress={() => { router.push("/browse/resources") }}
 				/>
 			</ScrollView>
 		</View>

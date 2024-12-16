@@ -26,8 +26,8 @@ const ResourceViewer = () => {
     const { sendRequest } = useRequests();
     const showToast = useToast();
 
-    const omittedKeys = ["_id", "__v", "createdAt", "updatedAt", "events"];
-    const handleDelete = async () => { 
+    const omittedKeys = ["_id", "__v", "createdAt", "updatedAt", "events", "stats"];
+    const handleDelete = async () => {
         try {
             const res = await sendRequest({
                 endpoint: `/${type}/${id}`,
@@ -43,7 +43,7 @@ const ResourceViewer = () => {
         } catch (error) {
             showToast("An error occurred while deleting the resource", "destructive", 3000);
         }
-     }
+    }
 
     useEffect(() => {
         const fetchResource = async () => {
@@ -152,14 +152,11 @@ const ResourceViewer = () => {
                 {Object.entries(resource).map(([key, value]) => {
                     if (omittedKeys.includes(key)) return null;
 
-                    ;
                     if (key === "magicSystem" && magicSystem) value = magicSystem.name;
 
                     if (key === "owner" && owner) value = owner;
 
-
                     if (key === "world") {
-
                         if (world) {
                             value = world.name;
                         } else {
@@ -172,7 +169,6 @@ const ResourceViewer = () => {
                             )
                         }
                     }
-
 
                     return (
                         <View key={key} className="mb-3 p-3 bg-[#333333] rounded-lg">

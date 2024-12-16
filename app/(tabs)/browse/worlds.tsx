@@ -1,6 +1,6 @@
 import React from "react";
 import { useRouter } from "expo-router";
-import { View, Image, ScrollView } from "react-native";
+import { View, Image, ScrollView, Text } from "react-native";
 
 import { IWorldType } from "@/types/models";
 import useRequests from "@/hooks/useRequests";
@@ -41,6 +41,7 @@ const Worlds = () => {
 					resizeMode="contain"
 				/>
 			</View>
+			<View className="flex self-center py-5"><Text className="text-xl font-bold text-white">Community Worlds</Text></View>
 
 			<ScrollView
 				className="px-4"
@@ -54,11 +55,6 @@ const Worlds = () => {
 						onPress={() => router.push(`/viewer/worlds/${world._id}`)}
 					/>
 				))}
-
-				<StandardCard
-					key={123}
-					title={"Test"}
-				/>
 			</ScrollView>
 		</View>
 	);

@@ -60,7 +60,7 @@ const Character = () => {
 			: []),
 	];
 
-	const handleFormComplete = async (formData: IStepCon) => {
+	const handleFormComplete = async (formData) => {
 		await sendRequest({
 			endpoint: "/characters",
 			method: "POST",
@@ -68,6 +68,7 @@ const Character = () => {
 			headers: { authorization: `Bearer ${session}` },
 		});
 		showToast("Character created successfully","success", 3000);
+
 		router.push("/main");
 	};
 
@@ -76,7 +77,7 @@ const Character = () => {
 			<View className="flex-1 justify-center items-center">
 				<Image
 					style={{ width: "100%", height: "55%" }}
-					source={require("@/assets/images/create_world_full.png")}
+					source={require("@/assets/images/create_character_full.png")}
 					resizeMode="cover"
 				/>
 				<Image

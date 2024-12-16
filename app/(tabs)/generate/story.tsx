@@ -70,8 +70,8 @@ const Story = () => {
 		<View className="flex-1 bg-[#333333]">
 			<View className="flex-1 justify-center items-center">
 				<Image
-					style={{ width: "100%", height: "55%" }}
-					source={require("@/assets/images/create_world_full.png")}
+					className="h-[20px] w-[20px] self-center"
+					source={require("@/assets/images/generate_story_full.png")}
 					resizeMode="cover"
 				/>
 				<Image

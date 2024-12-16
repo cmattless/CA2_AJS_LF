@@ -60,7 +60,6 @@ const useRequests = (): IRequest => {
 
 				const result = await api(config);
 				setResponse(result.data);
-				showToast("Request Success!", "success", 3000);
 				return result.data as T;
 			} catch (err: any) {
 				setError(err.response ? err.response.data : err.message);

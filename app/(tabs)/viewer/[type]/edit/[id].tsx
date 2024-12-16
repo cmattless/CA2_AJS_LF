@@ -22,7 +22,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import StepForm from "@/components/Forms/StepForm";
 
-const IGNORED_KEYS = ["__v", "_id", "createdAt", "updatedAt", "collaborators", "magicSystem"];
+const omittedKeys = ["__v", "_id", "createdAt", "updatedAt", "collaborators", "magicSystem"];
 
 type TResourceResponse = {
     error?: string;
@@ -197,7 +197,7 @@ const ResourceEditor: React.FC = () => {
 
             <ScrollView style={styles.contentContainer}>
                 {Object.entries(resource).map(([key, value]) => {
-                    if (IGNORED_KEYS.includes(key)) return null;
+                    if (omittedKeys.includes(key)) return null;
 
                     if (key === "owner") {
                         return (

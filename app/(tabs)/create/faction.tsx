@@ -62,7 +62,7 @@ const Faction = () => {
 			<View className="flex-1 justify-center items-center">
 				<Image
 					style={{ width: "100%", height: "55%" }}
-					source={require("@/assets/images/create_world_full.png")}
+					source={require("@/assets/images/create_faction_full.png")}
 					resizeMode="cover"
 				/>
 				<Image

@@ -17,8 +17,6 @@ const DisplayStory: React.FC = () => {
                     source={require("@/assets/images/LF_Trans.png")}
                     resizeMode="contain"
                 />
-
-
             </View>
             <ScrollView className="justify-between items-center p-4">
                 <Markdown style={styles}>{story}</Markdown>

@@ -65,7 +65,11 @@ export function SessionProvider(props: PropsWithChildren) {
 				signIn: (token: string) => {
 					setSession(token);
 				},
-				signOut: () => {},
+				signOut: () => {
+					setSession(null);
+					localStorage.removeItem("session");
+					localStorage.removeItem("user");
+				},
 				isValidJwt,
 				session,
 				user,
