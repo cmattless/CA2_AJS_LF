@@ -21,6 +21,7 @@ const Resources = () => {
 
 
     React.useEffect(() => {
+        console.log("Resources mounted");
         sendRequest({
             endpoint: `/characters/owner/${user?._id}`,
             method: "GET",
