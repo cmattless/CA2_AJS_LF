@@ -6,10 +6,11 @@ import { IWorldType } from "@/types/models";
 import useRequests from "@/hooks/useRequests";
 import { useToast } from "@/contexts/ToastContext";
 import { useSession } from "@/contexts/AuthContext";
-
+import { useIsFocused } from "@react-navigation/native";
 import { StandardCard } from "@/components/Menu/StandardCard";
 
 const Worlds = () => {
+	const isFocused = useIsFocused();
 	const router = useRouter();
 	const showToast = useToast();
 	const { session } = useSession();
@@ -30,7 +31,7 @@ const Worlds = () => {
 				showToast("Failed to fetch worlds", "destructive", 3000);
 			}
 		});
-	}, []);
+	}, [isFocused]);
 
 	return (
 		<View className="flex-1 bg-[#333333]">
@@ -47,6 +48,14 @@ const Worlds = () => {
 				className="px-4"
 				contentContainerStyle={{ paddingBottom: 40 }}
 			>
+
+				<StandardCard
+					title="Create a new world"
+					text="Create a world"
+					className="bg-[#F05E23]"
+					onPress={() => router.push("/create/world")}
+				/>
+
 				{allWorlds?.map((world) => (
 					<StandardCard
 						key={world._id}

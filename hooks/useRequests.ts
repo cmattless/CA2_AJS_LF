@@ -1,39 +1,27 @@
 import React from "react";
 import api from "../config/api";
 import { useToast } from "@/contexts/ToastContext";
-
-interface IRequestConfig {
-	endpoint: string;
-	method?: "GET" | "POST" | "PUT" | "DELETE";
-	data?: Record<string, unknown> | null;
-	headers?: Record<string, string>;
-}
-
-interface IRequest {
-	loading: boolean;
-	error: string | null;
-	response: unknown;
-	sendRequest: <T>(config: IRequestConfig) => Promise<T>;
-}
+import { IRequest, IRequestConfig } from "@/types/hooks";
 
 /**
  * Custom hook to handle API requests.
  */
-const useRequests = (): IRequest => {
+const useRequests = <T,>(): IRequest<T> => {
 	const showToast = useToast();
 	const [loading, setLoading] = React.useState(false);
 	const [error, setError] = React.useState<string | null>(null);
-	const [response, setResponse] = React.useState<unknown>(null);
+	const [response, setResponse] = React.useState<T | null>(null);
+
 
 	/**
-	 * Sends an HTTP request using the specified configuration.
+	 * Sends an HTTP request using the provided configuration.
 	 *
 	 * @template T - The expected response type.
-	 * @param {IRequestConfig} config - The request configuration.
-	 * @param {string} config.endpoint - The endpoint URL.
-	 * @param {string} [config.method="GET"] - The HTTP method (e.g., "GET", "POST").
-	 * @param {any} [config.data=null] - The request payload for methods like "POST" or "PUT".
-	 * @param {Record<string, string>} [config.headers={}] - The request headers.
+	 * @param {IRequestConfig} config - The request configuration object.
+	 * @param {string} config.endpoint - The endpoint URL for the request.
+	 * @param {string} [config.method="GET"] - The HTTP method to use for the request.
+	 * @param {any} [config.data=null] - The data to send with the request, if applicable.
+	 * @param {Record<string, string>} [config.headers={}] - The headers to include with the request.
 	 * @returns {Promise<T>} - A promise that resolves to the response data of type T.
 	 * @throws Will throw an error if the request fails.
 	 */

@@ -13,6 +13,7 @@ const DisplayStory: React.FC = () => {
         <View className="flex-1 bg-[#333333]">
             <View className="flex-row justify-between items-center p-4">
                 <Image
+                    className='w-full h-1/3 brightness-50'
                     style={{ width: 80, height: 122 }}
                     source={require("@/assets/images/LF_Trans.png")}
                     resizeMode="contain"

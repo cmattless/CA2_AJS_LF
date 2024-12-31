@@ -15,7 +15,6 @@ const Story = () => {
 	const { session, user } = useSession();
 	const { setStory } = useStory();
 	const { sendRequest } = useRequests();
-	const showToast = useToast();
 	const [loading, setLoading] = React.useState(false);
 
 	const [worlds, setWorlds] = React.useState<IWorldType[]>([]);
@@ -68,11 +67,14 @@ const Story = () => {
 
 	return (
 		<View className="flex-1 bg-[#333333]">
+			
 			<View className="flex-1 justify-center items-center">
 				<Image
-					className="h-[20px] w-[20px] self-center"
+					className="h-[20px] w-[20px] self-center brightness-50 "
 					source={require("@/assets/images/generate_story_full.png")}
 					resizeMode="cover"
+					style={{ flex: 1, width: "100%", height: "100%" }}
+
 				/>
 				<Image
 					className="self-center"

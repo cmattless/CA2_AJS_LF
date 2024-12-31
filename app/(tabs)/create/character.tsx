@@ -1,31 +1,33 @@
-import React, { useState } from "react";
-import { View, Button, Image, Text } from "react-native";
+import React from "react";
+import { View, Image, Text } from "react-native";
 import StepForm from "@/components/Forms/StepForm";
 import { useRouter } from "expo-router";
 import { useSession } from "@/contexts/AuthContext";
 import { useToast } from "@/contexts/ToastContext";
 import useRequests from "@/hooks/useRequests";
+import { IFactionType } from "@/types/models";
+import { Step } from "@/types/components/Forms";
 
 const Character = () => {
 	const router = useRouter();
 	const { session, user } = useSession();
-	const { loading, error, sendRequest } = useRequests();
+	const { sendRequest } = useRequests();
 	const showToast = useToast();
 
-	const [factions, setFactions] = React.useState([]);
+	const [factions, setFactions] = React.useState<IFactionType[]>([]);
 
 	React.useEffect(() => {
-		sendRequest({ endpoint: "/factions", method: "POST" }).then((res) => {
-			res.map((faction) => {
+		sendRequest<IFactionType[]>({ endpoint: "/factions", method: "GET", headers: { authorization: `Bearer ${session}` }, }).then((data) => {
+			data.map((faction) => {
 				setFactions((prev) => [
 					...prev,
-					{ name: faction.name, value: faction._id },
+					faction
 				]);
 			});
 		});
 	}, [user]);
 
-	const stepsConfig = [
+	const stepsConfig: Step[] = [
 		{
 			type: "text",
 			name: "name",
@@ -47,27 +49,31 @@ const Character = () => {
 			placeholder: "Enter character profession",
 			required: true,
 		},
-		...(factions.length > 0
-			? [
-					{
-						type: "dropdown",
-						name: "faction",
-						label: "Character Faction",
-						required: true,
-						options: factions,
-					},
-			  ]
-			: []),
+		{
+			type: "dropdown",
+			name: "faction",
+			label: "Character Faction",
+			required: true,
+			options: factions.map((faction) => ({
+				name: faction.name,
+				value: faction._id,
+			})),
+		}
 	];
 
-	const handleFormComplete = async (formData) => {
+	const handleFormComplete = async (formData: {
+		name: string;
+		description: string;
+		profession: string;
+		faction?: string;
+	}) => {
 		await sendRequest({
 			endpoint: "/characters",
 			method: "POST",
 			data: formData,
 			headers: { authorization: `Bearer ${session}` },
 		});
-		showToast("Character created successfully","success", 3000);
+		showToast("Character created successfully", "success", 3000);
 
 		router.push("/main");
 	};
@@ -76,7 +82,7 @@ const Character = () => {
 		<View className="flex-1 bg-[#333333]">
 			<View className="flex-1 justify-center items-center">
 				<Image
-					style={{ width: "100%", height: "55%" }}
+					style={{ flex: 1, width: "100%", height: "100%" }}
 					source={require("@/assets/images/create_character_full.png")}
 					resizeMode="cover"
 				/>

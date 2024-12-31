@@ -1,5 +1,6 @@
 import React, { useState } from "react";
-import { View, Switch, StyleSheet, Picker } from "react-native";
+import { View, Switch, StyleSheet} from "react-native";
+import { Picker } from '@react-native-picker/picker';
 import { Button } from "@/components/ui/button";
 import { Text } from "@/components/ui/text";
 import { Textarea } from "@/components/ui/textarea";
@@ -110,9 +111,12 @@ const StepForm: React.FC<StepFormProps> = ({ steps, onComplete }) => {
 
 	return (
 		<View style={styles.container}>
-			<Text className="text-destructive-foreground">
-				{currentStepConfig.label}
-			</Text>
+			<View className="w-[100%]">
+				<Text className="text-destructive-foreground uppercase font-bold text-xs">
+					{currentStepConfig.label}
+				</Text>
+			</View>
+		
 			{renderInput()}
 			<View
 				style={{
@@ -158,6 +162,7 @@ const styles = StyleSheet.create({
 		padding: 20,
 	},
 	title: {
+		
 		fontSize: 18,
 		marginBottom: 20,
 	},

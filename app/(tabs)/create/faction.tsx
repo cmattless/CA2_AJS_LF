@@ -5,7 +5,8 @@ import { useRouter } from "expo-router";
 import useRequests from "@/hooks/useRequests";
 import { useSession } from "@/contexts/AuthContext";
 import { useToast } from "@/contexts/ToastContext";
-import { IFactionType } from "@/types/models";
+import { Step } from "@/types/components/Forms";
+import { IErrorType } from "@/types/hooks";
 
 const Faction = () => {
 	const router = useRouter();
@@ -13,7 +14,7 @@ const Faction = () => {
 	const { loading, error, sendRequest } = useRequests();
 	const showToast = useToast();
 
-	const stepsConfig = [
+	const stepsConfig: Step[] = [
 		{
 			type: "text",
 			name: "name",
@@ -27,10 +28,10 @@ const Faction = () => {
 			label: "Faction Type",
 			required: true,
 			options: [
-				{ name: "Kingdom", value: "Kingdom" },
-				{ name: "Guild", value: "Guild" },
-				{ name: "Tribe", value: "Tribe" },
-				{ name: "Order", value: "Order" },
+				{ name: "Kingdom" },
+				{ name: "Guild" },
+				{ name: "Tribe" },
+				{ name: "Order" },
 			],
 		},
 		{
@@ -48,7 +49,7 @@ const Faction = () => {
 			method: "POST",
 			data: formData,
 			headers: { authorization: `Bearer ${session}` },
-		}).then((res) => {
+		}).catch((res: IErrorType) => {
 			if (res.error) {
 				return showToast(res.error, "destructive", 3000);
 			}
@@ -61,7 +62,8 @@ const Faction = () => {
 		<View className="flex-1 bg-[#333333]">
 			<View className="flex-1 justify-center items-center">
 				<Image
-					style={{ width: "100%", height: "55%" }}
+					className="brightness-50"
+					style={{ flex: 1, width: "100%", height: "100%" }}
 					source={require("@/assets/images/create_faction_full.png")}
 					resizeMode="cover"
 				/>

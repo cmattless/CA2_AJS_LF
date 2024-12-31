@@ -4,18 +4,20 @@ import { Pressable, View, Text } from "react-native";
 interface IStandardCardProps {
 	title: string;
 	text?: string;
+	className?: string;
 	onPress?: () => void;
 }
 
 export const StandardCard: React.FC<IStandardCardProps> = ({
 	title,
 	text,
+	className,
 	onPress,
 }) => {
 	return (
 		<Pressable
 			onPress={onPress}
-			className="mb-4 rounded-lg shadow-lg bg-[#555555] active:opacity-90"
+			className={"mb-4 rounded-lg shadow-lg bg-[#555555] active:opacity-90 " + className}
 			accessibilityRole="button"
 			accessibilityLabel={`Card: ${title}`}
 		>

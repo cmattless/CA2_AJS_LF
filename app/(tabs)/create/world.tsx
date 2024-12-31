@@ -52,7 +52,8 @@ const World = () => {
 		<View className="flex-1 bg-[#333333]">
 			<View className="flex-1 justify-center items-center">
 				<Image
-					style={{ width: "100%", height: "55%" }}
+					className="brightness-50"
+					style={{ flex: 1, width: "100%", height: "100%" }}
 					source={require("@/assets/images/create_world_full.png")}
 					resizeMode="cover"
 				/>
@@ -61,12 +62,15 @@ const World = () => {
 					source={require("@/assets/images/LF_Trans.png")}
 					style={{ width: 80, height: 122 }}
 				/>
-				<Text className="text-white text-xl font-bold mb-4">
+				<Text className="text-white text-2xl font-bold mb-4">
 					Create a World
 				</Text>
 			</View>
 			<View className="flex-1 items-center">
-				<StepForm steps={stepsConfig} onComplete={handleFormComplete} />
+				<View className="flex-1 min-w-1/2 items-center" style={{ width: 400 }}>
+					<StepForm steps={stepsConfig} onComplete={handleFormComplete} />
+				</View>
+				
 			</View>
 		</View>
 	);

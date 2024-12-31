@@ -1,5 +1,5 @@
 export interface IOptions {
-  _id: string;
+  _id?: string;
   name: string;
 }
 
@@ -15,5 +15,5 @@ export type Step = {
 
 export type StepFormProps = {
   steps: Step[];
-  onComplete: (formData: Record<string, any>) => void;
+  onComplete: (formData: Record<T>) => void;
 };

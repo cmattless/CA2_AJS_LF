@@ -40,3 +40,10 @@ export interface IFactionType extends IGenericModel {
     enemies?: string[];
     owner: string;
 }
+
+export interface ISpellType extends IGenericModel {
+  name: string;
+  type: string;
+}
+
+
