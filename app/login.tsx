@@ -1,10 +1,11 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { View, Text, Image, Pressable } from "react-native";
 import { useSession } from "@/contexts/AuthContext";
 import { Input } from "@/components/ui/input";
 import axios from "@/config/api.ts";
-import { useRouter } from "expo-router";
+import { Link, useRouter } from "expo-router";
 import useRequests from "@/hooks/useRequests";
+import { Button } from "@/components/ui/button";
 
 
 const Login = () => {
@@ -24,15 +25,15 @@ const Login = () => {
 
 	const handleAction = () => {
 		sendRequest({ endpoint: '/users/login', method: "POST", data: form }).then((res: any) => {
-			signIn(res.data.token);
-		}).then(() => { router.push("/(tabs)/main"); }).catch((err) => { setError(err.response?.data?.error || "Login failed"); });
+			signIn(res.token);
+		}).then(() => { router.push("/(tabs)/main"); }).catch((err) => { setError(err.response?.data?.error || `Login Failed: ${err}`); });
 	};
 
 	return (
 		<View className="flex-1 bg-[#333333]">
 			<View className="flex-1  items-center px-4">
 				<Image
-					className="w-full h-1/3"
+					className="w-full h-1/3 brightness-50"
 					source={require("@/assets/images/Login.png")}
 					resizeMode="cover"
 				/>
@@ -71,10 +72,17 @@ const Login = () => {
 					<Pressable
 						disabled={loading}
 						onPress={handleAction}
-						className="bg-[#F05E23] rounded p-3 items-center mb-4"
+						className={` ${loading ? `bg-stone-800` : `bg-[#F05E23]`} rounded p-3 items-center mb-4`}
 					>
 						<Text className="text-white font-semibold">Login</Text>
 					</Pressable>
+					<Link href="/register">
+						<Button className="w-full" variant={"link"}>
+							<Text className="text-center text-white">
+								Don't have an account?
+							</Text>
+						</Button>
+					</Link>
 				</View>
 			</View>
 		</View>
